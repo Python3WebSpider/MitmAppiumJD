@@ -10,14 +10,19 @@ products_collection = db['products']
 
 def response(flow):
     global comments_collection, products_collection
+    # 提取评论数据
     url = 'api.m.jd.com/client.action'
     if url in flow.request.url:
         pattern = re.compile('sku\".*?\"(\d+)\"')
+        # Request请求参数中包含商品ID
         body = unquote(flow.request.text)
+        # 提取商品ID
         id = re.search(pattern, body).group(1) if re.search(pattern, body) else None
+        # 提取Response Body
         text = flow.response.text
         data = json.loads(text)
         comments = data.get('commentInfoList') or []
+        # 提取评论数据
         for comment in comments:
             if comment.get('commentInfo') and comment.get('commentInfo').get('commentData'):
                 info = comment.get('commentInfo')
@@ -25,7 +30,7 @@ def response(flow):
                 date = info.get('commentDate')
                 nickname = info.get('userNickName')
                 pictures = info.get('pictureInfoList')
-                print(text, date)
+                print(id, nickname, text, date)
                 comments_collection.insert({
                     'id': id,
                     'text': text,
@@ -33,6 +38,7 @@ def response(flow):
                     'nickname': nickname,
                     'pictures': pictures
                 })
+                
     url = 'cdnware.m.jd.com'
     if url in flow.request.url:
         text = flow.response.text

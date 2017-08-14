@@ -14,7 +14,6 @@ DRIVER_SERVER = 'http://localhost:4723/wd/hub'
 # 等待元素加载时间
 TIMEOUT = 300
 
-
 # 滑动点
 FLICK_START_X = 300
 FLICK_START_Y = 300
