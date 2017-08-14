@@ -1,13 +1,8 @@
-import os
 from appium import webdriver
-from appium.webdriver.common.touch_action import TouchAction
-from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from pymongo import MongoClient
 from time import sleep
-from processor import Processor
 from config import *
 
 
@@ -21,7 +16,7 @@ class Action():
             'platformName': PLATFORM,
             'deviceName': DEVICE_NAME,
             'appPackage': 'com.jingdong.app.mall',
-            'appActivity': '.main.MainActivity'
+            'appActivity': 'main.MainActivity'
         }
         self.driver = webdriver.Remote(DRIVER_SERVER, self.desired_caps)
         self.wait = WebDriverWait(self.driver, TIMEOUT)
